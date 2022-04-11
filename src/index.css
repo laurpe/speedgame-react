@@ -2,7 +2,7 @@
 
 body {
     font-family: "Space Mono", monospace;
-    color: var(--dark);
+    color: rgb(40, 74, 78);
     background-image: linear-gradient(
         180deg,
         rgb(122, 191, 255),

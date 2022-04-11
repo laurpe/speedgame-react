@@ -1,7 +1,12 @@
 import styles from "./Circle.module.css";
 
-const Circle = () => {
-    return <div className={styles.circle}></div>;
+const Circle = ({ circle }) => {
+    return (
+        <div>
+            {circle.active && <button className={styles.circleActive}></button>}
+            {!circle.active && <button className={styles.circle}></button>}
+        </div>
+    );
 };
 
 export default Circle;

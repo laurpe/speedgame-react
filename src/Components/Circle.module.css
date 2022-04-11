@@ -1,13 +1,22 @@
-:root {
-    --dark: rgb(40, 74, 78);
-    --light: rgb(226, 241, 239);
-}
-
 .circle {
-    border: 2px solid var(--dark);
+    border: 2px solid rgb(40, 74, 78);
     border-radius: 50%;
     width: 150px;
     height: 150px;
-    background-color: var(--light);
+    background-color: rgb(226, 241, 239);
     cursor: pointer;
+}
+
+.circleActive {
+    border: 2px solid rgb(40, 74, 78);
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    background-color: rgb(226, 241, 239);
+    cursor: pointer;
+    background-color: red;
+    /* background-image: url("images/green_bug.png");
+    background-position: center;
+    background-size: 30px auto;
+    background-repeat: no-repeat; */
 }

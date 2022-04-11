@@ -2,7 +2,7 @@ import styles from "./Button.module.css";
 
 const Button = ({ handleClick, title }) => {
     return (
-        <button className={styles.button} type="button" onClick={handleClick}>
+        <button styles={styles.button} onClick={handleClick}>
             {title}
         </button>
     );
