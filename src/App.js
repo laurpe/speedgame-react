@@ -5,27 +5,15 @@ import { useState } from "react";
 
 const App = () => {
     const [gameOn, setGameOn] = useState(false);
-    const [circles, setCircles] = useState([
-        { id: 1, active: false },
-        { id: 2, active: true },
-        { id: 3, active: false },
-        { id: 4, active: false },
-    ]);
-
-    const timer = () => {
-        setTimeout(setGameOn, 1000);
-    };
-
-    console.log(circles);
+    const [circles, setCircles] = useState([false, false, false, false]);
 
     const handleClickStart = () => {
-        console.log("start button clicked");
-        setGameOn(true);
+        setActiveCircle();
+        console.log(circles);
     };
 
     const handleClickStop = () => {
         console.log("stop button clicked");
-        setGameOn(false);
     };
 
     // const handleClickCircle = (index) => {
@@ -33,23 +21,29 @@ const App = () => {
     // }
 
     //returns the index of the next active
-    const pickNew = (active) => {
-        let nextActive = Math.floor(Math.random() * 4);
+    const pickNew = () => {
+        const nextActive = Math.floor(Math.random() * 4);
+        const active = circles.indexOf(true);
+        console.log("active", active);
+        console.log("nextActive", nextActive);
 
         if (nextActive !== active) {
             return nextActive;
         } else {
-            return pickNew(active);
+            return pickNew();
         }
     };
 
-    const pickActiveCircle = () => {
-        circles.forEach((circle) => (circle.active = false));
-        let nextActive = pickNew();
-        const circlesCopy = [...circles];
-        circlesCopy[nextActive].active = true;
-        setCircles(circlesCopy);
+    const setActiveCircle = () => {
+        const nextActive = pickNew();
+        const newCircles = [false, false, false, false];
+        newCircles[nextActive] = true;
+        setCircles(newCircles);
     };
+
+    // setTimeout(() => {
+    //     setActiveCircle();
+    // }, 1000);
 
     return (
         <div className="container">
@@ -59,8 +53,8 @@ const App = () => {
             <main>
                 <Score />
                 <div className="circles">
-                    {circles.map((circle) => {
-                        return <Circle circle={circle} key={circle.id} />;
+                    {circles.map((circle, index) => {
+                        return <Circle circle={circle} key={index} />;
                     })}
                 </div>
                 <div className="buttons">
