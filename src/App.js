@@ -6,27 +6,30 @@ import { useState } from "react";
 const App = () => {
     const [gameOn, setGameOn] = useState(false);
     const [circles, setCircles] = useState([false, false, false, false]);
+    const [rounds, setRounds] = useState(0);
+    const [pace, setPace] = useState(1000);
+
+    let timer;
+
+    const reloadGame = () => {
+        window.location.reload();
+    };
 
     const handleClickStart = () => {
+        setGameOn(true);
         setActiveCircle();
-        console.log(circles);
     };
 
     const handleClickStop = () => {
-        console.log("stop button clicked");
+        setGameOn(false);
+        clearTimeout(timer);
+        reloadGame();
     };
 
-    // const handleClickCircle = (index) => {
-    //   if (index !== )
-    // }
-
-    //returns the index of the next active
     const pickNew = () => {
         const nextActive = Math.floor(Math.random() * 4);
         const active = circles.indexOf(true);
-        console.log("active", active);
-        console.log("nextActive", nextActive);
-
+        console.log(circles);
         if (nextActive !== active) {
             return nextActive;
         } else {
@@ -39,11 +42,9 @@ const App = () => {
         const newCircles = [false, false, false, false];
         newCircles[nextActive] = true;
         setCircles(newCircles);
+        setPace(pace - 10);
+        timer = setTimeout(setActiveCircle, pace);
     };
-
-    // setTimeout(() => {
-    //     setActiveCircle();
-    // }, 1000);
 
     return (
         <div className="container">
