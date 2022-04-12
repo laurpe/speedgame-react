@@ -1,6 +1,8 @@
 import Circle from "./Components/Circle";
 import Button from "./Components/Button";
 import Score from "./Components/Score";
+import Popup from "./Components/Popup";
+import Backdrop from "./Components/Backdrop";
 import { Component } from "react";
 
 class App extends Component {
@@ -10,6 +12,7 @@ class App extends Component {
         rounds: 0,
         pace: 1000,
         score: 0,
+        showPopup: false,
     };
     timer;
 
@@ -20,7 +23,6 @@ class App extends Component {
     pickNew = () => {
         const nextActive = Math.floor(Math.random() * 4);
         const active = this.state.circles.indexOf(true);
-        // console.log("circles inside picknew", circles);
         if (nextActive !== active) {
             return nextActive;
         } else {
@@ -33,7 +35,6 @@ class App extends Component {
         const newCircles = [false, false, false, false];
         newCircles[nextActive] = true;
         this.setState({ circles: newCircles });
-        // console.log("circles after setting new", circles);
         this.setState({ pace: this.state.pace - 10 });
         if (this.state.rounds >= 5) {
             this.stopGame();
@@ -51,11 +52,12 @@ class App extends Component {
 
     stopGame = () => {
         this.setState({ gameOn: false });
+        this.setState({ showPopup: true });
         clearTimeout(this.timer);
-        this.reloadGame();
     };
 
     handleClickStop = () => {
+        this.setState({ showPopup: true });
         this.stopGame();
     };
 
@@ -68,40 +70,58 @@ class App extends Component {
         }
     };
 
+    handlePopupClose = () => {
+        this.setState({ showPopup: false });
+        this.reloadGame();
+    };
+
     render() {
         return (
-            <div className="container">
-                <header>
-                    <h1>Get the bugs!</h1>
-                </header>
-                <main>
-                    <Score score={this.state.score} />
-                    <div className="circles">
-                        {this.state.circles.map((circle, index) => {
-                            return (
-                                <Circle
-                                    circle={circle}
-                                    key={index}
-                                    handleClickCircle={this.handleClickCircle}
+            <div>
+                <div className="container">
+                    <header>
+                        <h1>Get the bugs!</h1>
+                    </header>
+                    <main>
+                        <Score score={this.state.score} />
+                        <div className="circles">
+                            {this.state.circles.map((circle, index) => {
+                                return (
+                                    <Circle
+                                        circle={circle}
+                                        key={index}
+                                        handleClickCircle={
+                                            this.handleClickCircle
+                                        }
+                                    />
+                                );
+                            })}
+                        </div>
+                        <div className="buttons">
+                            {this.state.gameOn && (
+                                <Button
+                                    handleClick={this.handleClickStop}
+                                    title="Stop"
                                 />
-                            );
-                        })}
+                            )}
+                            {!this.state.gameOn && (
+                                <Button
+                                    handleClick={this.handleClickStart}
+                                    title="Start"
+                                />
+                            )}
+                        </div>
+                    </main>
+                </div>
+                {this.state.showPopup && (
+                    <div>
+                        <Backdrop />
+                        <Popup
+                            score={this.state.score}
+                            handleClick={this.handlePopupClose}
+                        />
                     </div>
-                    <div className="buttons">
-                        {this.state.gameOn && (
-                            <Button
-                                handleClick={this.handleClickStop}
-                                title="Stop"
-                            />
-                        )}
-                        {!this.state.gameOn && (
-                            <Button
-                                handleClick={this.handleClickStart}
-                                title="Start"
-                            />
-                        )}
-                    </div>
-                </main>
+                )}
             </div>
         );
     }
