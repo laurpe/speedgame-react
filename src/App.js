@@ -40,7 +40,6 @@ class App extends Component {
             this.stopGame();
         }
         this.setState({ rounds: this.state.rounds + 1 });
-        console.log("rounds: ", this.state.rounds);
         console.log(this.state.pace);
         this.timer = setTimeout(this.setActiveCircle, this.state.pace);
     };

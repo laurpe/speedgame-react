@@ -17,6 +17,8 @@ body {
 
 .circles {
     display: flex;
+    justify-content: space-around;
+    width: 700px;
     padding: 30px;
 }
 
