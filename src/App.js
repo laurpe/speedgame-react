@@ -1,100 +1,110 @@
 import Circle from "./Components/Circle";
 import Button from "./Components/Button";
 import Score from "./Components/Score";
-import { useState } from "react";
+import { Component } from "react";
 
-const App = () => {
-    const [gameOn, setGameOn] = useState(false);
-    const [circles, setCircles] = useState([false, false, false, false]);
-    const [rounds, setRounds] = useState(0);
-    const [pace, setPace] = useState(1000);
-    const [score, setScore] = useState(0);
+class App extends Component {
+    state = {
+        gameOn: false,
+        circles: [false, false, false, false],
+        rounds: 0,
+        pace: 1000,
+        score: 0,
+    };
+    timer;
 
-    let timer;
-
-    const reloadGame = () => {
+    reloadGame = () => {
         window.location.reload();
     };
 
-    const handleClickStart = () => {
-        setGameOn(true);
-        setActiveCircle();
-    };
-
-    const stopGame = () => {
-        setGameOn(false);
-        clearTimeout(timer);
-        reloadGame();
-    };
-
-    const handleClickStop = () => {
-        stopGame();
-    };
-
-    const handleClickCircle = (circle) => {
-        if (circle) {
-            setScore(score + 1);
-            setRounds(rounds - 1);
-        } else {
-            stopGame();
-        }
-    };
-
-    const pickNew = () => {
+    pickNew = () => {
         const nextActive = Math.floor(Math.random() * 4);
-        const active = circles.indexOf(true);
+        const active = this.state.circles.indexOf(true);
         // console.log("circles inside picknew", circles);
         if (nextActive !== active) {
             return nextActive;
         } else {
-            return pickNew();
+            return this.pickNew();
         }
     };
 
-    const setActiveCircle = () => {
-        const nextActive = pickNew();
+    setActiveCircle = () => {
+        const nextActive = this.pickNew();
         const newCircles = [false, false, false, false];
         newCircles[nextActive] = true;
-        setCircles(newCircles);
+        this.setState({ circles: newCircles });
         // console.log("circles after setting new", circles);
-        setPace(pace - 10);
-        if (rounds >= 5) {
-            stopGame();
+        this.setState({ pace: this.state.pace - 10 });
+        if (this.state.rounds >= 5) {
+            this.stopGame();
         }
-        setRounds(rounds + 1);
-        console.log("rounds: ", rounds);
-        timer = setTimeout(setActiveCircle, pace);
+        this.setState({ rounds: this.state.rounds + 1 });
+        console.log("rounds: ", this.state.rounds);
+        console.log(this.state.pace);
+        this.timer = setTimeout(this.setActiveCircle, this.state.pace);
     };
 
-    return (
-        <div className="container">
-            <header>
-                <h1>Get the bugs!</h1>
-            </header>
-            <main>
-                <Score score={score} />
-                <div className="circles">
-                    {circles.map((circle, index) => {
-                        return (
-                            <Circle
-                                circle={circle}
-                                key={index}
-                                handleClickCircle={handleClickCircle}
+    handleClickStart = () => {
+        this.setState({ gameOn: true });
+        this.setActiveCircle();
+    };
+
+    stopGame = () => {
+        this.setState({ gameOn: false });
+        clearTimeout(this.timer);
+        this.reloadGame();
+    };
+
+    handleClickStop = () => {
+        this.stopGame();
+    };
+
+    handleClickCircle = (circle) => {
+        if (circle) {
+            this.setState({ score: this.state.score + 1 });
+            this.setState({ rounds: this.state.rounds - 1 });
+        } else {
+            this.stopGame();
+        }
+    };
+
+    render() {
+        return (
+            <div className="container">
+                <header>
+                    <h1>Get the bugs!</h1>
+                </header>
+                <main>
+                    <Score score={this.state.score} />
+                    <div className="circles">
+                        {this.state.circles.map((circle, index) => {
+                            return (
+                                <Circle
+                                    circle={circle}
+                                    key={index}
+                                    handleClickCircle={this.handleClickCircle}
+                                />
+                            );
+                        })}
+                    </div>
+                    <div className="buttons">
+                        {this.state.gameOn && (
+                            <Button
+                                handleClick={this.handleClickStop}
+                                title="Stop"
                             />
-                        );
-                    })}
-                </div>
-                <div className="buttons">
-                    {gameOn && (
-                        <Button handleClick={handleClickStop} title="Stop" />
-                    )}
-                    {!gameOn && (
-                        <Button handleClick={handleClickStart} title="Start" />
-                    )}
-                </div>
-            </main>
-        </div>
-    );
-};
+                        )}
+                        {!this.state.gameOn && (
+                            <Button
+                                handleClick={this.handleClickStart}
+                                title="Start"
+                            />
+                        )}
+                    </div>
+                </main>
+            </div>
+        );
+    }
+}
 
 export default App;
