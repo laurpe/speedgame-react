@@ -1,7 +1,7 @@
 import Circle from "./Components/Circle";
 import Button from "./Components/Button";
 import Score from "./Components/Score";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const App = () => {
     const [gameOn, setGameOn] = useState(false);
@@ -9,8 +9,6 @@ const App = () => {
     const [rounds, setRounds] = useState(0);
     const [pace, setPace] = useState(1000);
     const [score, setScore] = useState(0);
-
-    useEffect(() => {}, [circles]);
 
     let timer;
 
