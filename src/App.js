@@ -18,7 +18,6 @@ class App extends Component {
         gameOn: false,
         difficultySet: false,
         difficulty: "",
-        //circles empty array in beginning, handleDifficulty sets circles for start
         circles: [],
         rounds: 0,
         pace: 1000,
@@ -135,47 +134,46 @@ class App extends Component {
 
     render() {
         return (
-            <div>
-                <header>
+            <>
+                <div className="container">
                     <h1>Speedgame</h1>
-                </header>
-                {!this.state.difficultySet && (
-                    <Difficulty handleClick={this.handleDifficulty} />
-                )}
+                    {!this.state.difficultySet && (
+                        <>
+                            <h3>Choose difficulty</h3>
+                            <Difficulty handleClick={this.handleDifficulty} />
+                        </>
+                    )}
+                </div>
                 {this.state.difficultySet && (
-                    <div>
-                        <div className="container">
-                            <main>
-                                <Score score={this.state.score} />
-                                <div className="circles">
-                                    {this.state.circles.map((circle, index) => {
-                                        return (
-                                            <Circle
-                                                circle={circle}
-                                                key={index}
-                                                handleClickCircle={
-                                                    this.handleClickCircle
-                                                }
-                                                gameOn={this.state.gameOn}
-                                            />
-                                        );
-                                    })}
-                                </div>
-                                <div className="buttons">
-                                    {this.state.gameOn && (
-                                        <Button
-                                            handleClick={this.handleClickStop}
-                                            title="Stop"
-                                        />
-                                    )}
-                                    {!this.state.gameOn && (
-                                        <Button
-                                            handleClick={this.handleClickStart}
-                                            title="Start"
-                                        />
-                                    )}
-                                </div>
-                            </main>
+                    <>
+                        <Score score={this.state.score} />
+                        <div className="circles">
+                            {this.state.circles.map((circle, index) => {
+                                return (
+                                    <Circle
+                                        circle={circle}
+                                        key={index}
+                                        handleClickCircle={
+                                            this.handleClickCircle
+                                        }
+                                        gameOn={this.state.gameOn}
+                                    />
+                                );
+                            })}
+                        </div>
+                        <div className="buttons">
+                            {this.state.gameOn && (
+                                <Button
+                                    handleClick={this.handleClickStop}
+                                    title="Stop"
+                                />
+                            )}
+                            {!this.state.gameOn && (
+                                <Button
+                                    handleClick={this.handleClickStart}
+                                    title="Start"
+                                />
+                            )}
                         </div>
                         {this.state.showPopup && (
                             <div>
@@ -186,9 +184,9 @@ class App extends Component {
                                 />
                             </div>
                         )}
-                    </div>
+                    </>
                 )}
-            </div>
+            </>
         );
     }
 }
