@@ -1,6 +1,6 @@
 import styles from "./Circle.module.css";
 
-const Circle = ({ circle, handleClickCircle }) => {
+const Circle = ({ circle, handleClickCircle, gameOn }) => {
     return (
         <div>
             {circle && (
@@ -13,6 +13,7 @@ const Circle = ({ circle, handleClickCircle }) => {
                 <button
                     className={styles.circle}
                     onClick={() => handleClickCircle(circle)}
+                    disabled={!gameOn ? true : false}
                 ></button>
             )}
         </div>

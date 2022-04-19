@@ -92,6 +92,7 @@ class App extends Component {
                                         handleClickCircle={
                                             this.handleClickCircle
                                         }
+                                        gameOn={this.state.gameOn}
                                     />
                                 );
                             })}
