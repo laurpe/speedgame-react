@@ -2,7 +2,7 @@ import styles from "./Circle.module.css";
 
 const Circle = ({ circle, handleClickCircle, gameOn }) => {
     return (
-        <div>
+        <div className={styles.circleDiv}>
             {circle && (
                 <button
                     className={styles.circleActive}

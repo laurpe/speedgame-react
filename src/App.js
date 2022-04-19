@@ -5,6 +5,13 @@ import Popup from "./Components/Popup";
 import Backdrop from "./Components/Backdrop";
 import Difficulty from "./Components/Difficulty";
 import { Component } from "react";
+import click from "./sounds/splat.ogg";
+import music from "./sounds/music.ogg";
+import endSound from "./sounds/game_over.wav";
+
+const clickSound = new Audio(click);
+const gameMusic = new Audio(music);
+const stopSound = new Audio(endSound);
 
 class App extends Component {
     state = {
@@ -18,6 +25,7 @@ class App extends Component {
         score: 0,
         showPopup: false,
     };
+
     timer;
 
     reloadGame = () => {
@@ -36,7 +44,12 @@ class App extends Component {
 
     setActiveCircle = () => {
         const nextActive = this.pickNew();
-        const newCircles = [false, false, false, false];
+        const newCircles = Array.apply(
+            null,
+            Array(this.state.circles.length)
+        ).map(() => {
+            return false;
+        });
         newCircles[nextActive] = true;
         this.setState({ circles: newCircles });
         this.setState({ pace: this.state.pace - 10 });
@@ -51,12 +64,15 @@ class App extends Component {
     handleClickStart = () => {
         this.setState({ gameOn: true });
         this.setActiveCircle();
+        gameMusic.play();
     };
 
     stopGame = () => {
         this.setState({ gameOn: false });
         this.setState({ showPopup: true });
         clearTimeout(this.timer);
+        gameMusic.pause();
+        stopSound.play();
     };
 
     handleClickStop = () => {
@@ -68,6 +84,7 @@ class App extends Component {
         if (circle) {
             this.setState({ score: this.state.score + 1 });
             this.setState({ rounds: this.state.rounds - 1 });
+            clickSound.play();
         } else {
             this.stopGame();
         }
@@ -83,21 +100,30 @@ class App extends Component {
         switch (difficulty) {
             case "easy":
                 this.setState({
-                    circles: [false, false, false],
+                    circles: [false, false, false, false],
                     difficultySet: true,
                     difficulty: "easy",
                 });
                 break;
             case "medium":
                 this.setState({
-                    circles: [false, false, false, false, false],
+                    circles: [false, false, false, false, false, false],
                     difficultySet: true,
                     difficulty: "medium",
                 });
                 break;
             case "hard":
                 this.setState({
-                    circles: [false, false, false, false, false, false, false],
+                    circles: [
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                    ],
                     difficultySet: true,
                     difficulty: "hard",
                 });
