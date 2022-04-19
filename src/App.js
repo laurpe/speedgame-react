@@ -3,6 +3,7 @@ import Button from "./Components/Button";
 import Score from "./Components/Score";
 import Popup from "./Components/Popup";
 import Backdrop from "./Components/Backdrop";
+import Difficulty from "./Components/Difficulty";
 import { Component } from "react";
 
 class App extends Component {
@@ -74,9 +75,24 @@ class App extends Component {
         this.reloadGame();
     };
 
+    handleDifficulty = (difficulty) => {
+        console.log("handleDifficulty called, difficulty: ", difficulty);
+        switch (difficulty) {
+            case "easy":
+                break;
+            case "medium":
+                break;
+            case "hard":
+                break;
+            default:
+                break;
+        }
+    };
+
     render() {
         return (
             <div>
+                <Difficulty handleClick={this.handleDifficulty} />
                 <div className="container">
                     <header>
                         <h1>Get the bugs!</h1>
