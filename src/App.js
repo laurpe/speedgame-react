@@ -16,7 +16,6 @@ class App extends Component {
     state = {
         gameOn: false,
         difficultySet: false,
-        difficulty: "",
         circles: [],
         rounds: 0,
         pace: 1000,
@@ -95,41 +94,10 @@ class App extends Component {
     };
 
     handleDifficulty = (difficulty) => {
-        console.log("handleDifficulty called, difficulty: ", difficulty);
-        switch (difficulty) {
-            case "easy":
-                this.setState({
-                    circles: [false, false, false, false],
-                    difficultySet: true,
-                    difficulty: "easy",
-                });
-                break;
-            case "medium":
-                this.setState({
-                    circles: [false, false, false, false, false, false],
-                    difficultySet: true,
-                    difficulty: "medium",
-                });
-                break;
-            case "hard":
-                this.setState({
-                    circles: [
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                    ],
-                    difficultySet: true,
-                    difficulty: "hard",
-                });
-                break;
-            default:
-                break;
-        }
+        this.setState({
+            circles: new Array(difficulty.circles).fill(false),
+            difficultySet: true,
+        });
     };
 
     render() {
@@ -157,6 +125,7 @@ class App extends Component {
                                             this.handleClickCircle
                                         }
                                         gameOn={this.state.gameOn}
+                                        circles={this.state.circles}
                                     />
                                 );
                             })}

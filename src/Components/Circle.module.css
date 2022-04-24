@@ -7,13 +7,7 @@
     cursor: pointer;
 }
 
-.circleActive {
-    border: 2px solid rgb(40, 74, 78);
-    border-radius: 50%;
-    width: 150px;
-    height: 150px;
-    background-color: rgb(226, 241, 239);
-    cursor: pointer;
+.active {
     background-image: url("/public/images/green_bug.png");
     background-position: center;
     background-size: 30px auto;
