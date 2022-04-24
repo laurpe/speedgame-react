@@ -16,6 +16,7 @@ class App extends Component {
     state = {
         gameOn: false,
         difficultySet: false,
+        difficulty: {},
         circles: [],
         rounds: 0,
         pace: 1000,
@@ -97,6 +98,7 @@ class App extends Component {
         this.setState({
             circles: new Array(difficulty.circles).fill(false),
             difficultySet: true,
+            difficulty: difficulty,
         });
     };
 
@@ -115,7 +117,9 @@ class App extends Component {
                 {this.state.difficultySet && (
                     <>
                         <Score score={this.state.score} />
-                        <div className="circles">
+                        <div
+                            className={`circles ${this.state.difficulty.level}`}
+                        >
                             {this.state.circles.map((circle, index) => {
                                 return (
                                     <Circle
@@ -125,7 +129,7 @@ class App extends Component {
                                             this.handleClickCircle
                                         }
                                         gameOn={this.state.gameOn}
-                                        circles={this.state.circles}
+                                        difficulty={this.state.difficulty}
                                     />
                                 );
                             })}

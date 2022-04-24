@@ -1,6 +1,6 @@
 import styles from "./Circle.module.css";
 
-const Circle = ({ circle, handleClickCircle, gameOn, circles }) => {
+const Circle = ({ circle, handleClickCircle, gameOn, difficulty }) => {
     return (
         <div>
             {circle && (
