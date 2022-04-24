@@ -42,7 +42,6 @@ class App extends Component {
 
     setActiveCircle = () => {
         const nextActive = this.pickNew(this.state.circles);
-        console.log(nextActive);
         const newCircles = Array.apply(
             null,
             Array(this.state.circles.length)
@@ -50,13 +49,11 @@ class App extends Component {
             return false;
         });
         newCircles[nextActive] = true;
-        this.setState({ circles: newCircles });
-        this.setState({ pace: this.state.pace - 10 });
+        this.setState({ circles: newCircles, pace: this.state.pace - 10 });
         if (this.state.rounds >= 5) {
             this.stopGame();
         }
         this.setState({ rounds: this.state.rounds + 1 });
-        console.log(this.state.pace);
         this.timer = setTimeout(this.setActiveCircle, this.state.pace);
     };
 
@@ -67,22 +64,24 @@ class App extends Component {
     };
 
     stopGame = () => {
-        this.setState({ gameOn: false });
-        this.setState({ showPopup: true });
+        this.setState({ gameOn: false, showPopup: true });
         clearTimeout(this.timer);
         gameMusic.pause();
         stopSound.play();
     };
 
     handleClickStop = () => {
-        this.setState({ showPopup: true });
         this.stopGame();
     };
 
+    //TODO: hard level: game keeps going after clicking wrong circle
+
     handleClickCircle = (circle) => {
         if (circle) {
-            this.setState({ score: this.state.score + 1 });
-            this.setState({ rounds: this.state.rounds - 1 });
+            this.setState({
+                score: this.state.score + 1,
+                rounds: this.state.rounds - 1,
+            });
             const clickSound = new Audio(click);
             clickSound.play();
         } else {
