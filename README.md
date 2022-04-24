@@ -10,4 +10,4 @@ A small browser game I made to practice React.
 
 ### Setup and usage
 
-Live page here:
+Live page here: https://delightful-daffodil-3a6d34.netlify.app/
