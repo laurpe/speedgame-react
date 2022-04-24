@@ -7,4 +7,6 @@ button {
     border-radius: 5px;
     background-color: rgb(226, 241, 239);
     color: rgb(40, 74, 78);
+    margin-left: 10px;
+    min-width: 100px;
 }

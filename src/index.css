@@ -18,19 +18,9 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 20px;
     place-items: center;
+    max-width: 800px;
+    margin: 30px auto;
 }
-
-/* @media (max-width: 900px) {
-    .circles {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-@media (max-width: 600px) {
-    .circles {
-        grid-template-columns: repeat(2, 1fr);
-    }
-} */
 
 .buttons {
     display: flex;

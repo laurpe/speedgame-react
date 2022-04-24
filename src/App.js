@@ -9,7 +9,6 @@ import click from "./sounds/splat.ogg";
 import music from "./sounds/music.ogg";
 import endSound from "./sounds/game_over.wav";
 
-const clickSound = new Audio(click);
 const gameMusic = new Audio(music);
 const stopSound = new Audio(endSound);
 
@@ -83,6 +82,7 @@ class App extends Component {
         if (circle) {
             this.setState({ score: this.state.score + 1 });
             this.setState({ rounds: this.state.rounds - 1 });
+            const clickSound = new Audio(click);
             clickSound.play();
         } else {
             this.stopGame();
@@ -136,7 +136,7 @@ class App extends Component {
         return (
             <>
                 <div className="container">
-                    <h1>Speedgame</h1>
+                    <h1>Get the bugs!</h1>
                     {!this.state.difficultySet && (
                         <>
                             <h3>Choose difficulty</h3>
