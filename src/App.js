@@ -30,18 +30,19 @@ class App extends Component {
         window.location.reload();
     };
 
-    pickNew = () => {
-        const nextActive = Math.floor(Math.random() * 4);
+    pickNew = (circles) => {
+        const nextActive = Math.floor(Math.random() * circles.length);
         const active = this.state.circles.indexOf(true);
         if (nextActive !== active) {
             return nextActive;
         } else {
-            return this.pickNew();
+            return this.pickNew(circles);
         }
     };
 
     setActiveCircle = () => {
-        const nextActive = this.pickNew();
+        const nextActive = this.pickNew(this.state.circles);
+        console.log(nextActive);
         const newCircles = Array.apply(
             null,
             Array(this.state.circles.length)
